@@ -16,6 +16,8 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet var habitButtons: [UIButton]!
     @IBOutlet var habitCounterLabels: [UILabel]!
+    @IBOutlet var daysScinceLabels: [UILabel]!
+    
     
     
     // Mehtods
@@ -46,10 +48,16 @@ class DashboardViewController: UIViewController {
                 if let dates = storedData[String(index)] {
                     count = countTimesLastSevenDays(dates)
                     habitLabel.text = String(count)
+                    daysScinceLabels[index].text = calculateDaysScince(dates.last!)
                 }
                 index += 1
             }
         }
+    }
+    
+    func calculateDaysScince(_ date: Date) -> String {
+        let differenceInDays = (Date().timeIntervalSinceReferenceDate - date.timeIntervalSinceReferenceDate) / 86400
+        return String(format: "%.0f", differenceInDays.rounded(.down))
     }
     
     func countTimesLastSevenDays(_ arrayOfDates: Array<Date>) -> Int{
